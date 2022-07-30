@@ -25,6 +25,7 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
+
         return [
             'name' => $this->faker->randomElement(['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5'])
         ];

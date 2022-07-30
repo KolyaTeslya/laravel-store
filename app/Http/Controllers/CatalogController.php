@@ -15,7 +15,7 @@ class CatalogController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('created_at', 'desc')->simplePaginate();
+        $products = Product::orderBy('created_at', 'desc')->simplePaginate(12);
 
         return view('catalog.index', compact('products'));
     }
@@ -44,12 +44,14 @@ class CatalogController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $product = Product::where('slug', $slug)->first();
+
+        return view('catalog.product', ['product' => $product]);
     }
 
     /**
