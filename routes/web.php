@@ -29,10 +29,10 @@ Route::prefix('cart')->group(function (){
     Route::get('drop', [\App\Http\Controllers\CartController::class, 'drop'])->name('cart.drop');
     Route::get('destroy', [\App\Http\Controllers\CartController::class, 'destroy'])->name('cart.destroy');
     Route::get('checkout', [\App\Http\Controllers\CartController::class, 'checkout'])->name('cart.checkout');
-
+    Route::get('success/{orderId}', [\App\Http\Controllers\CartController::class, 'success'])->name('cart.success');
 });
 
-
+Route::resource('order', \App\Http\Controllers\OrderController::class, ['only' => ['store', 'update', 'destroy', 'show']]);
 
 
 

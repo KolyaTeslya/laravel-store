@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CartDropItemRequest;
 use App\Http\Requests\CartUpdateRequest;
+use App\Models\Order;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
@@ -20,7 +21,8 @@ class CartController extends Controller
     {
         $product = Product::findOrfail($productId);
 
-        Cart::add($product->id, $product->title, 1, $product->price);
+        $cartRow = Cart::add($product->id, $product->title, 1, $product->price);
+        $cartRow->associate(Product::class);
 
         return redirect()->back();
     }
@@ -44,6 +46,18 @@ class CartController extends Controller
         Cart::destroy();
 
         return redirect()->route('cart.index');
+    }
+
+    public function checkout()
+    {
+        return view('orders.checkout');
+    }
+
+    public function success($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+
+        return view('cart.success', compact('order'));
     }
 
 }
